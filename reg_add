@@ -1,0 +1,70 @@
+----------------------------------------------------------------------------------
+-- Company: 
+-- Engineer: 
+-- 
+-- Create Date: 05.03.2024 12:59:42
+-- Design Name: 
+-- Module Name: reg_add - reg_add_arch
+-- Project Name: 
+-- Target Devices: 
+-- Tool Versions: 
+-- Description: 
+-- 
+-- Dependencies: 
+-- 
+-- Revision:
+-- Revision 0.01 - File Created
+-- Additional Comments:
+-- 
+----------------------------------------------------------------------------------
+
+
+library IEEE;
+use IEEE.STD_LOGIC_1164.ALL;
+use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if using
+-- arithmetic functions with Signed or Unsigned values
+--use IEEE.NUMERIC_STD.ALL;
+
+-- Uncomment the following library declaration if instantiating
+-- any Xilinx leaf cells in this code.
+--library UNISIM;
+--use UNISIM.VComponents.all;
+
+entity reg_add is
+    port( 
+        i_add : in std_logic_vector(15 downto 0);
+        i_clk : in std_logic;
+        i_rst : in std_logic;
+        add_piu : in std_logic;
+        add_en : in std_logic;
+        
+        o_mem_addr : out std_logic_vector(15 downto 0)
+
+    );
+end reg_add;
+
+architecture reg_add_arch of reg_add is
+ signal stored_value : std_logic_vector(15 downto 0);
+ begin
+    o_mem_addr <= stored_value;
+ process(i_clk, i_rst, add_en, add_piu)
+ variable tmp : unsigned (15 downto 0);
+ begin
+    if i_rst = '1' then 
+        stored_value <= (others => '0');
+    elsif i_clk'event and i_clk = '1' then
+        if add_en = '1' then 
+            stored_value <= i_add;
+        elsif add_piu = '1' then
+            tmp := unsigned (stored_value);
+            tmp := tmp + 0000000000000001;
+            stored_value <= std_logic_vector(tmp); 
+        end if;
+    end if;        
+ end process;
+
+
+
+end reg_add_arch;
