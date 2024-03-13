@@ -24,21 +24,6 @@ begin
 
 end progetto_arch;
 
-REG_ADD
-entity reg_add is
-    port( 
-        i_add : in std_logic_vector(15 downto 0);
-        i_clk : in std_logic;
-        i_rst : in std_logic;
-        add_piu : in std_logic;
-        add_en : in std_logic;
-        
-        o_mem_addr : out std_logic_vector(15 downto 0)
-
-    );
-end reg_add;
-
-architecture reg_add_arch of reg_add is
 
 begin
 
